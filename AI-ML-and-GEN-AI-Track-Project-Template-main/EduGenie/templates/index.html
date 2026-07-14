@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduGenie</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <p class="tag">Groq Powered Learning Assistant</p>
+            <h1>EduGenie</h1>
+            <p>
+                Ask questions, explain concepts, generate quizzes, summarize content,
+                and get personalized learning recommendations.
+            </p>
+        </header>
+
+        <section class="grid">
+            <form method="post" class="card">
+                <label>Learning Task</label>
+                <select name="task">
+                    <option value="question_answering" {% if task == "question_answering" %}selected{% endif %}>Question Answering</option>
+                    <option value="explanation" {% if task == "explanation" %}selected{% endif %}>Concept Explanation</option>
+                    <option value="quiz" {% if task == "quiz" %}selected{% endif %}>Quiz Generation</option>
+                    <option value="summary" {% if task == "summary" %}selected{% endif %}>Text Summarization</option>
+                    <option value="recommendation" {% if task == "recommendation" %}selected{% endif %}>Learning Recommendations</option>
+                </select>
+
+                <label>Student Level</label>
+                <select name="level">
+                    <option value="beginner" {% if level == "beginner" %}selected{% endif %}>Beginner</option>
+                    <option value="intermediate" {% if level == "intermediate" %}selected{% endif %}>Intermediate</option>
+                    <option value="advanced" {% if level == "advanced" %}selected{% endif %}>Advanced</option>
+                </select>
+
+                <label>Question, Topic, or Content</label>
+                <textarea name="query" rows="10" required>{{ query }}</textarea>
+
+                <button type="submit">Generate Response</button>
+            </form>
+
+            <div class="card output">
+                {% if result %}
+                    <div class="result-header">
+                        <h2>{{ result.title }}</h2>
+                        <span>{{ result.model_used }}</span>
+                    </div>
+                    <pre>{{ result.output }}</pre>
+                {% else %}
+                    <h2>Your result will appear here</h2>
+                    <p>Select a task, enter your content, and generate an AI response.</p>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>
